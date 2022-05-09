@@ -428,7 +428,7 @@ impl EtherscanRequest {
                 None => String::new(),
             },
             match module_action {
-                Some((_, action)) => format!("?module={}", serde_plain::to_string(&action)?),
+                Some((_, action)) => format!("?action={}", serde_plain::to_string(&action)?),
                 None => String::new(),
             },
             match contractaddress {
