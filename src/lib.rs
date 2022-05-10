@@ -220,8 +220,8 @@ impl EtherscanRequest {
 
     #[inline]
     pub fn account_token_tx(
-        contract_address: U256,
-        account_address: U256,
+        contract_address: Option<U256>,
+        account_address: Option<U256>,
         startblock: Option<U256>,
         endblock: Option<U256>,
         page: Option<U256>,
@@ -230,8 +230,8 @@ impl EtherscanRequest {
     ) -> Self {
         Self {
             module_action: Some((EtherscanModule::Account, EtherscanAction::TokenTx)),
-            contractaddress: Some(contract_address),
-            address: Some(vec![account_address]),
+            contractaddress: contract_address,
+            address: account_address.map(|x| vec![x]),
             page,
             offset,
             startblock,
@@ -428,7 +428,7 @@ impl EtherscanRequest {
                 None => String::new(),
             },
             match module_action {
-                Some((_, action)) => format!("?action={}", serde_plain::to_string(&action)?),
+                Some((_, action)) => format!("&action={}", serde_plain::to_string(&action)?),
                 None => String::new(),
             },
             match contractaddress {
