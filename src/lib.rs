@@ -1,8 +1,9 @@
-use std::error::Error;
-
-use futures::Future;
-use serde::{Deserialize, Serialize};
-use web3::types::U256;
+use {
+    ethabi::ethereum_types::U256,
+    futures::Future,
+    serde::{Deserialize, Serialize},
+    std::error::Error,
+};
 
 #[derive(Clone, Copy, Deserialize, Serialize)]
 #[serde(rename_all = "lowercase")]
@@ -140,10 +141,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn account_balance(
-        address: U256,
-        tag: Option<EtherscanTag>,
-    ) -> Self {
+    pub fn account_balance(address: U256, tag: Option<EtherscanTag>) -> Self {
         Self {
             module_action: Some((EtherscanModule::Account, EtherscanAction::Balance)),
             address: Some(vec![address]),
@@ -153,10 +151,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn account_balance_multi(
-        addresses: Vec<U256>,
-        tag: Option<EtherscanTag>,
-    ) -> Self {
+    pub fn account_balance_multi(addresses: Vec<U256>, tag: Option<EtherscanTag>) -> Self {
         Self {
             module_action: Some((EtherscanModule::Account, EtherscanAction::BalanceMulti)),
             address: Some(addresses),
@@ -208,9 +203,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn account_tx_list_internal_hash(
-        txhash: U256,
-    ) -> Self {
+    pub fn account_tx_list_internal_hash(txhash: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Account, EtherscanAction::TxListInternal)),
             txhash: Some(txhash),
@@ -280,9 +273,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn contract_get_abi(
-        contract_address: U256,
-    ) -> Self {
+    pub fn contract_get_abi(contract_address: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Contract, EtherscanAction::GetABI)),
             address: Some(vec![contract_address]),
@@ -291,9 +282,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn contract_get_source_code(
-        contract_address: U256,
-    ) -> Self {
+    pub fn contract_get_source_code(contract_address: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Contract, EtherscanAction::GetSourceCode)),
             address: Some(vec![contract_address]),
@@ -302,9 +291,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn transaction_get_status(
-        transaction_hash: U256,
-    ) -> Self {
+    pub fn transaction_get_status(transaction_hash: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Transaction, EtherscanAction::GetStatus)),
             txhash: Some(transaction_hash),
@@ -313,20 +300,19 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn transaction_get_receipt_status(
-        transaction_hash: U256,
-    ) -> Self {
+    pub fn transaction_get_receipt_status(transaction_hash: U256) -> Self {
         Self {
-            module_action: Some((EtherscanModule::Transaction, EtherscanAction::GetTxReceiptStatus)),
+            module_action: Some((
+                EtherscanModule::Transaction,
+                EtherscanAction::GetTxReceiptStatus,
+            )),
             txhash: Some(transaction_hash),
             ..Default::default()
         }
     }
 
     #[inline]
-    pub fn block_get_countdown(
-        block_number: U256,
-    ) -> Self {
+    pub fn block_get_countdown(block_number: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Block, EtherscanAction::GetBlockCountdown)),
             blockno: Some(block_number),
@@ -335,9 +321,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn block_get_number_by_timestamp(
-        timestamp: U256,
-    ) -> Self {
+    pub fn block_get_number_by_timestamp(timestamp: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Block, EtherscanAction::GetBlockNoByTime)),
             timestamp: Some(timestamp),
@@ -346,9 +330,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn stats_token_supply(
-        contract_address: U256,
-    ) -> Self {
+    pub fn stats_token_supply(contract_address: U256) -> Self {
         Self {
             module_action: Some((EtherscanModule::Stats, EtherscanAction::TokenSupply)),
             contractaddress: Some(contract_address),
@@ -357,8 +339,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn stats_eth_supply(
-    ) -> Self {
+    pub fn stats_eth_supply() -> Self {
         Self {
             module_action: Some((EtherscanModule::Stats, EtherscanAction::EthSupply)),
             ..Default::default()
@@ -366,8 +347,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn stats_eth2_supply(
-    ) -> Self {
+    pub fn stats_eth2_supply() -> Self {
         Self {
             module_action: Some((EtherscanModule::Stats, EtherscanAction::EthSupply2)),
             ..Default::default()
@@ -375,8 +355,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn stats_eth_price(
-    ) -> Self {
+    pub fn stats_eth_price() -> Self {
         Self {
             module_action: Some((EtherscanModule::Stats, EtherscanAction::EthPrice)),
             ..Default::default()
@@ -384,8 +363,7 @@ impl EtherscanRequest {
     }
 
     #[inline]
-    pub fn stats_node_count(
-    ) -> Self {
+    pub fn stats_node_count() -> Self {
         Self {
             module_action: Some((EtherscanModule::Stats, EtherscanAction::NodeCount)),
             ..Default::default()
