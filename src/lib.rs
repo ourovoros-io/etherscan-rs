@@ -410,7 +410,15 @@ impl EtherscanRequest {
                 None => String::new(),
             },
             match contractaddress {
-                Some(contractaddress) => format!("&contractaddress=0x{contractaddress:020X}"),
+                Some(x) => {
+                    let mut address = format!("{x:X}");
+
+                    while address.len() < 40 {
+                        address = format!("0{address}");
+                    }
+
+                    format!("&contractaddress=0x{address}")
+                },
                 None => String::new(),
             },
             match address {
@@ -418,7 +426,15 @@ impl EtherscanRequest {
                     "&address={}",
                     address
                         .iter()
-                        .map(|x| format!("0x{x:020X}"))
+                        .map(|x| {
+                            let mut address = format!("{x:X}");
+
+                            while address.len() < 40 {
+                                address = format!("0{address}");
+                            }
+
+                            format!("0x{address}")
+                        })
                         .collect::<Vec<_>>()
                         .join(",")
                 ),
